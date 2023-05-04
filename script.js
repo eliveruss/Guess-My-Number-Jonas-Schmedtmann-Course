@@ -14,6 +14,8 @@ document.querySelector(`.check`).addEventListener('click', function () {
     message.textContent = 'No number';
   } else if (guess === secretNumber) {
     message.textContent = 'Correct number';
+    document.querySelector('body').style.backgroundColor = 'green';
+    document.querySelector('.number').style.width = '30rem';
   } else if (guess > secretNumber) {
     if (score > 1) {
       message.textContent = 'Too high! Try again. -1 score';

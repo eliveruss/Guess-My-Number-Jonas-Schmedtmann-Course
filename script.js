@@ -1,37 +1,56 @@
 'use strict';
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
-document.querySelector(`.number`).textContent = secretNumber;
-
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 const message = document.querySelector('.message');
-
+const numberSpace = document.querySelector('.number');
+const body = document.querySelector('body');
+const scoreSpace = document.querySelector('.score');
+const checkBtn = document.querySelector('.check');
+const againBtn = document.querySelector('.again');
+const inputLabel = document.querySelector('.guess');
+const highscoreSpace = document.querySelector('.highscore');
 let score = 20;
+let highscoreArr = [];
 
-document.querySelector(`.check`).addEventListener('click', function () {
-  const guess = Number(document.querySelector('.guess').value);
-
+checkBtn.addEventListener('click', function () {
+  const guess = Number(inputLabel.value);
   if (!guess) {
     message.textContent = 'No number';
   } else if (guess === secretNumber) {
     message.textContent = 'Correct number';
-    document.querySelector('body').style.backgroundColor = 'green';
-    document.querySelector('.number').style.width = '30rem';
+    body.style.backgroundColor = 'green';
+    numberSpace.style.width = '30rem';
+    numberSpace.textContent = secretNumber;
+    highscoreArr.push(score);
+    highscoreSpace.textContent = Math.max.apply(null, highscoreArr);
+    console.log(highscoreArr);
   } else if (guess > secretNumber) {
     if (score > 1) {
       message.textContent = 'Too high! Try again. -1 score';
       score--;
-      document.querySelector('.score').textContent = score;
+      scoreSpace.textContent = score;
     } else {
       message.textContent = 'You lost the game!';
-      document.querySelector('.score').textContent = '0';
+      scoreSpace.textContent = '0';
     }
   } else if (guess < secretNumber) {
     if (score > 1) {
       message.textContent = 'Too low! Try again. -1 score';
       score--;
-      document.querySelector('.score').textContent = score;
+      scoreSpace.textContent = score;
     } else {
       message.textContent = 'You lost the game!';
     }
   }
+});
+
+againBtn.addEventListener('click', function () {
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  numberSpace.textContent = '?';
+  numberSpace.style.width = '15rem';
+  message.textContent = 'Start guessing...';
+  body.style.backgroundColor = '#222';
+  inputLabel.value = '';
+  score = 20;
+  scoreSpace.textContent = score;
 });

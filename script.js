@@ -12,7 +12,7 @@ const highscoreSpace = document.querySelector('.highscore');
 let score = 20;
 let highscoreArr = [];
 
-checkBtn.addEventListener('click', function () {
+const check = function () {
   const guess = Number(inputLabel.value);
   if (!guess) {
     message.textContent = 'No number';
@@ -23,7 +23,7 @@ checkBtn.addEventListener('click', function () {
     numberSpace.textContent = secretNumber;
     highscoreArr.push(score);
     highscoreSpace.textContent = Math.max.apply(null, highscoreArr);
-    console.log(highscoreArr);
+    // console.log(highscoreArr);
   } else if (guess > secretNumber) {
     if (score > 1) {
       message.textContent = 'Too high! Try again. -1 score';
@@ -42,9 +42,9 @@ checkBtn.addEventListener('click', function () {
       message.textContent = 'You lost the game!';
     }
   }
-});
+};
 
-againBtn.addEventListener('click', function () {
+const again = function () {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   numberSpace.textContent = '?';
   numberSpace.style.width = '15rem';
@@ -53,4 +53,7 @@ againBtn.addEventListener('click', function () {
   inputLabel.value = '';
   score = 20;
   scoreSpace.textContent = score;
-});
+};
+
+checkBtn.addEventListener('click', check);
+againBtn.addEventListener('click', again);

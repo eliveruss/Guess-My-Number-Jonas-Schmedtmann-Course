@@ -1,6 +1,5 @@
 'use strict';
 
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
 const message = document.querySelector('.message');
 const numberSpace = document.querySelector('.number');
 const body = document.querySelector('body');
@@ -9,13 +8,16 @@ const checkBtn = document.querySelector('.check');
 const againBtn = document.querySelector('.again');
 const inputLabel = document.querySelector('.guess');
 const highscoreSpace = document.querySelector('.highscore');
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let score = 20;
 let highscoreArr = [];
 
 const check = function () {
   const guess = Number(inputLabel.value);
+  // empty guess
   if (!guess) {
     message.textContent = 'No number';
+    // correct guess
   } else if (guess === secretNumber) {
     message.textContent = 'Correct number';
     body.style.backgroundColor = 'green';
@@ -23,23 +25,19 @@ const check = function () {
     numberSpace.textContent = secretNumber;
     highscoreArr.push(score);
     highscoreSpace.textContent = Math.max.apply(null, highscoreArr);
-    // console.log(highscoreArr);
-  } else if (guess > secretNumber) {
+    // wrong guess
+  } else if (guess !== secretNumber) {
     if (score > 1) {
-      message.textContent = 'Too high! Try again. -1 score';
+      message.textContent =
+        guess > secretNumber
+          ? 'Too high! Try again. -1 score'
+          : 'Too low! Try again. -1 score';
       score--;
       scoreSpace.textContent = score;
-    } else {
+    } //lost game
+    else {
       message.textContent = 'You lost the game!';
       scoreSpace.textContent = '0';
-    }
-  } else if (guess < secretNumber) {
-    if (score > 1) {
-      message.textContent = 'Too low! Try again. -1 score';
-      score--;
-      scoreSpace.textContent = score;
-    } else {
-      message.textContent = 'You lost the game!';
     }
   }
 };
